@@ -5,6 +5,24 @@ import gym
 from TrainedActorDDPG import ReplayBuffer, DDPG
 from RLQubeModelVar import *
 from NNnetwork import *
+from pynput import keyboard
+
+break_program = True
+
+# Keyboard Terminator (I can use this to terminate the model)
+def on_press(key):
+    global break_program
+    print(key)
+    if key == keyboard.Key.enter and break_program:
+        print ('end pressed')
+        break_program = False
+
+    if key == keyboard.Key.f1:
+        print ('enter pressed')
+        break_program = True
+
+listener =  keyboard.Listener(on_press=on_press)
+listener.start()
 
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
@@ -60,7 +78,7 @@ yaw_list = []
 
 for i in range(500):  # Iteration for n episode
     episode_return = 0  # culmulated for each episode chain
-    weight=1#(np.random.rand()-0.5)*2
+    weight=(np.random.rand()-0.5)*2
     state = env.reset(weight) # reset to original
     done = False  # the episode comes to an end
     time=0 # The Timer
@@ -116,16 +134,16 @@ for i in range(500):  # Iteration for n episode
     # print the information for this episode
     print(f'iter:{i}, return:{episode_return}, mean_return:{np.mean(return_list[-10:])}, weight: {weight}')
 
-    if np.mean(return_list[-10:]) >= -25 and i>100:
+    if (np.mean(return_list[-10:]) >= -20 or (not break_program) )and i>10:
         break
     
     
     
 # Save the trained actor and critic
-torch.save(agent.actor.state_dict(), 'TrainActor2.pth')  # Saves only the model parameters
-torch.save(agent.target_actor.state_dict(), 'TargetActor2.pth') 
-torch.save(agent.critic.state_dict(), 'TrainCritic2.pth') 
-torch.save(agent.target_critic.state_dict(), 'TargetCritic2.pth') 
+#torch.save(agent.actor.state_dict(), 'TrainActor2.pth')  # Saves only the model parameters
+torch.save(agent.target_actor.state_dict(), 'RLPolicy2.pth') #'TargetActor2.pth'#
+#torch.save(agent.critic.state_dict(), 'TrainCritic2.pth') 
+#torch.save(agent.target_critic.state_dict(), 'TargetCritic2.pth') 
 
 
 # -------------------------------------- #
