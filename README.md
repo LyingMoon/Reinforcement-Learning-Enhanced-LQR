@@ -3,7 +3,7 @@ Code for CS229 Group Project
 Run TrainCritic.py
 
 
-
+```python
 Those are the hyperparameters you need to tune for better training result
 batch_size=64
 sigma=0.2
