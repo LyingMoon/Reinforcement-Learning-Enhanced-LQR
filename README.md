@@ -14,5 +14,6 @@ critic_lr=0.002
 gamma = 0.99
 buffer_size=40000
 min_size=10000
+```
 
 Test
