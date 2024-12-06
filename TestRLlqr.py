@@ -26,7 +26,7 @@ RLQube = DiscreteTimeVarQubeModel(state)
 #Qube = DiscreteTimeQubeModel(state)
 
 rl = PolicyNet(n_states, n_hiddens, n_actions, rl_action_bound)
-rl.load_state_dict(torch.load('RLPolicy2.pth'))
+rl.load_state_dict(torch.load('case_1.pth'))
 rl.eval()
 
 x1=[]
@@ -42,7 +42,7 @@ v=[]
 rlv=[]
 rewardlqr=0
 rlrewardlqr = 0
-weight = 1
+weight = 1.2
 feq=1
 # The simulation loop
 for i in range(0,701):
