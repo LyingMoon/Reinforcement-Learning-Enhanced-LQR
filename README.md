@@ -5,14 +5,8 @@ Run TrainCritic.py
 
 Those are the hyperparameters you need to tune for better training result
 ```python
-batch_size=64
-sigma=0.2
-tau=0.01
 actor_lr=0.00005
 critic_lr=0.002
-gamma = 0.99
-buffer_size=40000
-min_size=10000
 ```
 
 You can define where to stop the training by adjust the termination condition in: 
